@@ -8,14 +8,18 @@
 import Foundation
 import SwiftUI
 
-
-//struct Bubble:Identifiable{
-//    let id = UUID()
-//    var position:CGPoint
-//    var color:Color
-//    var isPopped:Bool = false
-//    var speed:Double
-//    var point:Int
-//    var creationTime: Date = Date()
-//
-//}
+struct Habit: Identifiable, Codable {
+    let id: UUID
+    var name: String
+    var lastCompletedDate: Date?
+    
+    init(
+        id: UUID = UUID(),
+        name: String,
+        lastCompletedDate: Date? = nil
+    ) {
+        self.id = id
+        self.name = name
+        self.lastCompletedDate = lastCompletedDate
+    }
+}
