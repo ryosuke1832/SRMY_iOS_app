@@ -7,18 +7,26 @@
 
 import SwiftUI
 
-struct ContentView: View {
+// Individual habit List
+struct HabitListView: View {
+    let habit: Habit
+    @ObservedObject var habitService: HabitService
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        HStack {
+            Text(habit.name)
+            
+            Spacer()
+            
+            // Completion status indicator
+            Button {
+                habitService.completeHabit(habit)
+            } label: {
+                Image(systemName: habitService.isHabitCompletedToday(habit) ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(habitService.isHabitCompletedToday(habit) ? .green : .gray)
+            }
         }
-        .padding()
+        .padding(.vertical, 4)
     }
 }
 
-#Preview {
-    ContentView()
-}

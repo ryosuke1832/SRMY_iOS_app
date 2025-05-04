@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MainView.swift
 //  SRMY_iOS_app
 //
 //  Created by user on 2025/05/04.
@@ -7,18 +7,21 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
+    @StateObject private var habitService = HabitService()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List {
+                ForEach(habitService.habits) { habit in
+                    HabitListView(habit: habit, habitService: habitService)
+                }
+            }
+            .navigationTitle("Habits")
         }
-        .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    MainView()
 }
