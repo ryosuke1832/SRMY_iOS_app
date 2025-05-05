@@ -12,6 +12,7 @@ struct ManualLogin: View {
     @State private var password: String = ""
     @State private var isLoggedIn = false
     @State private var errorMessage: String? = nil
+    @StateObject private var authService = AuthService()
 
     var body: some View {
         NavigationView {
@@ -59,17 +60,13 @@ struct ManualLogin: View {
     }
 
     func loginUser() {
-        guard !username.isEmpty, !password.isEmpty else {
-            errorMessage = "Username and Password cannot be empty"
-            return
-        }
-
-        if username == "Admin" && password == "password123" {
-            isLoggedIn = true
-            errorMessage = nil
-            UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        } else {
-            errorMessage = "Invalid credentials"
+        AuthService.shared.loginWithUsernamePassword(username: username, password: password) { success, message in
+            if success {
+                isLoggedIn = true
+                errorMessage = nil
+            } else {
+                errorMessage = message
+            }
         }
     }
 }
