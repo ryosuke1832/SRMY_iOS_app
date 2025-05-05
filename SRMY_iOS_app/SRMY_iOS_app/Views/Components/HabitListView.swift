@@ -9,24 +9,35 @@ import SwiftUI
 
 // Individual habit List
 struct HabitListView: View {
-    let habit: Habit
-    @ObservedObject var habitService: HabitService
+    @EnvironmentObject var habitService: HabitService
+    @State private var editingHabit: Habit? = nil
     
     var body: some View {
-        HStack {
-            Text(habit.name)
-            
-            Spacer()
-            
-            // Completion status indicator
-            Button {
-                habitService.completeHabit(habit)
-            } label: {
-                Image(systemName: habitService.isHabitCompletedToday(habit) ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(habitService.isHabitCompletedToday(habit) ? .green : .gray)
+        List {
+            ForEach(habitService.habits) { habit in
+                HabitRowView(habit: habit)
+                    .swipeActions (edge: .leading, allowsFullSwipe: false){
+                        Button(role: .destructive) {
+                            habitService.deleteHabit(habit)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
+                    .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                        Button {
+                            editingHabit = habit
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        .tint(.blue)
+                    }
+                
+            }
+            .sheet(item: $editingHabit) { habit in
+                HabitEditView(habit: habit)
             }
         }
-        .padding(.vertical, 4)
     }
 }
+
 

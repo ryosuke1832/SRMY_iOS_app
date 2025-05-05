@@ -8,20 +8,49 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var habitService = HabitService()
+    @EnvironmentObject var habitService: HabitService
+    @State private var showingAddHabit = false
     
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(habitService.habits) { habit in
-                    HabitListView(habit: habit, habitService: habitService)
+        NavigationView {
+            VStack {
+                if habitService.habits.isEmpty {
+                   
+                    VStack(spacing: 20) {
+                        Image(systemName: "list.bullet.clipboard")
+                            .font(.system(size: 60))
+                            .foregroundColor(.gray)
+                        
+                        Text("Nothing")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        
+                        Text("add new habit!")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    HabitListView()
                 }
             }
-            .navigationTitle("Habits")
+            .navigationTitle("Habit List")
+            .navigationBarItems(trailing: Button(action: {
+                showingAddHabit = true
+            }) {
+                Image(systemName: "plus")
+            })
+            .sheet(isPresented: $showingAddHabit) {
+                HabitModifyView()
+            }
         }
     }
 }
 
 #Preview {
     MainView()
+        .environmentObject(HabitService())
 }
