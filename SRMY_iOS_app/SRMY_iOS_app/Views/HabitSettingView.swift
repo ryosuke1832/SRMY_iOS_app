@@ -10,11 +10,11 @@ import SwiftUI
 struct HabitSettingView: View {
     
     @State private var selection = "daily"
-        let colours = ["daily", "weekly", "fortnightly", "monthly", "quarterly"]
+        let cadences = ["daily", "weekly", "fortnightly", "monthly", "quarterly"]
     
     var body: some View {
         VStack {
-            Text("set your goals")
+            Text("modify your goals")
                 .font(.title)
             
             Spacer()
@@ -26,19 +26,24 @@ struct HabitSettingView: View {
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .foregroundColor(.accentColor)
+                        .fill(Color.white)
+                                .shadow(radius: 2)
                 )
-            TextField("run for 30 minutes", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+            
+            TextField("drink 8 glasses of water", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .foregroundColor(.accentColor)
+                        .fill(Color.white)
+                                .shadow(radius: 2)
                 )
-            TextField("run for 30 minutes", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+            
+            TextField("eat 3 serves of fruit", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .foregroundColor(.accentColor)
+                        .fill(Color.white)
+                                .shadow(radius: 2)
                 )
             
             Spacer()
@@ -46,17 +51,28 @@ struct HabitSettingView: View {
             Text("when do you want to check in to your goals?")
                 .font(.title2)
 
-            Menu(selection) {
-                ForEach(colours, id: \.self) { colours in
-                    Button (colours, action: {
-                        selection = colours
-                    })
+            Menu {
+                ForEach(cadences, id: \.self) { cadence in
+                    Button(cadence) {
+                        selection = cadence
+                    }
                 }
+            } label: {
+                HStack {
+                    Text(selection.capitalized)
+                    Image("arrow-icon")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 12, height: 12)
+                }
+                .padding()
+                .foregroundColor(.black)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.white)
+                        .shadow(radius: 2)
+                )
             }
-            .pickerStyle(.menu)
-            .padding(.all, 16)
-            .foregroundStyle(Color.white)
-            .background(RoundedRectangle(cornerRadius: 16).fill(Color.black))
             
             Spacer()
 
@@ -65,12 +81,14 @@ struct HabitSettingView: View {
                     /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
                     
                 }
+                .foregroundColor(.white)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 16).fill(Color.black))
 
                 Button("Next") {
                     /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
                 }
+                .foregroundColor(.white)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 16).fill(Color.black))
 
