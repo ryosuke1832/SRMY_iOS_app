@@ -67,8 +67,24 @@ class AuthService: ObservableObject {
             return
         }
 
-        // Simple hardcoded credentials check (you could later connect this to a backend or Firebase)
-        if username == "Admin" && password == "password123" {
+        let savedUsername = UserDefaults.standard.string(forKey: "username") ?? ""
+        let savedPassword = UserDefaults.standard.string(forKey: "password") ?? ""
+        var checkUserName: String = ""
+        var checkPassword: String = ""
+        
+        if(savedUsername == "" && savedPassword == "")
+        {
+            checkUserName = "Admin"
+            checkUserName = "password123"
+        }
+        else
+        {
+            checkUserName = savedUsername
+            checkPassword = savedPassword
+        }
+        
+        //if username == "Admin" && password == "password123" {
+        if username == checkUserName && password == checkPassword {
             UserDefaults.standard.set(true, forKey: "isLoggedIn")
             completion(true, nil)
         } else {
