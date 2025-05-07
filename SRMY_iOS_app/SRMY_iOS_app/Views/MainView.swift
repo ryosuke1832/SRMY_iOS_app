@@ -41,11 +41,13 @@ struct MainView: View {
                 }
             }
             .navigationTitle("Habit List")
+            .navigationBarBackButtonHidden(true)
             .navigationBarItems(trailing: Button(action: {
                 showingAddHabit = true
             }) {
                 Image(systemName: "plus")
             })
+            
             .navigationBarItems(trailing: Button(action: {
                 showingLevelView = true
             }) {
@@ -67,7 +69,9 @@ struct MainView: View {
                   showingLevelUp = true
               }
         }
+        .navigationBarBackButtonHidden(true)
     }
+        
 }
 
 #Preview {

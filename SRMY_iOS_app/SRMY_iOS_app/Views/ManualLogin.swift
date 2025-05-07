@@ -52,11 +52,17 @@ struct ManualLogin: View {
                 NavigationLink(destination: MainView(), isActive: $isLoggedIn) {
                     EmptyView()
                 }
-
+                
+                
                 Spacer()
+                    
             }
             .padding()
+            
+            
         }
+        .navigationBarBackButtonHidden(true)
+    
     }
 
     func loginUser() {
