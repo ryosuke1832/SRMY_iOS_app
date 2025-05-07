@@ -38,22 +38,9 @@
 		CE77017E2DC70C710068F3E0 /* SRMY_iOS_appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SRMY_iOS_appUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		CEB721742DC8CD7500B4A855 /* Exceptions for "SRMY_iOS_app" folder in "SRMY_iOS_app" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"SRMY-iOS-app-Info.plist",
-			);
-			target = CE7701662DC70C6F0068F3E0 /* SRMY_iOS_app */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CE7701692DC70C6F0068F3E0 /* SRMY_iOS_app */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				CEB721742DC8CD7500B4A855 /* Exceptions for "SRMY_iOS_app" folder in "SRMY_iOS_app" target */,
-			);
 			path = SRMY_iOS_app;
 			sourceTree = "<group>";
 		};
@@ -142,6 +129,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8EC276C52DCB44C7005DB98E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				CE7701692DC70C6F0068F3E0 /* SRMY_iOS_app */,
@@ -303,6 +291,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8EC276C52DCB44C7005DB98E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 8EC276C42DCB44C7005DB98E /* ConfettiSwiftUI */;
+		};
 		CE7701762DC70C700068F3E0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CE7701662DC70C6F0068F3E0 /* SRMY_iOS_app */;
@@ -639,6 +631,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8EC276842DCB23C0005DB98E /* XCRemoteSwiftPackageReference "ViewInspector" */;
 			productName = ViewInspector;
+		};
+		8EC276C42DCB44C7005DB98E /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E63113E2DC9BC28000345ED /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
 		};
 		8EE32C8D2DCA67E4000542DE /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
