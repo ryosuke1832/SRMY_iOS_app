@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var habitService = HabitService()
-    
-    var body: some View {
-        MainView()
-            .environmentObject(habitService)
-    }
+    var body: some View { MainView() }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+
+
+#Preview {
+    // previews need mock objects too
+    let ls = LevelService()
+    ContentView()
+        .environmentObject(ls)
+        .environmentObject(HabitService(levelService: ls))
 }

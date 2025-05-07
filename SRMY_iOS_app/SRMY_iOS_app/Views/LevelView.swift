@@ -7,15 +7,37 @@
 //
 
 import SwiftUI
+import ConfettiSwiftUI
 
 struct LevelView: View {
+    @State private var confettiCounter = 0
+    @EnvironmentObject var levelService: LevelService
+    #if DEBUG
+    /// Test‑only probe so unit‑tests can read the value
+    var _test_confettiCounter: Int { confettiCounter }
+    #endif
+    // Convenience computed progress in 0‒1 range
+    private var progress: Double {
+        Double(levelService.profile.xp) /
+        Double(levelService.xpNeeded(for: levelService.profile.level))
+    }
+    
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text(levelService.levelText).font(.title2).bold()
+            ProgressView(value: levelService.progress)
+                .frame(height: 12).tint(.green)
         }
         .padding()
+        .onReceive(levelService.levelUpPublisher) { _ in   // still celebrate
+            confettiCounter += 1
+        }
+        .confettiCannon(trigger: $confettiCounter)
     }
+}
+
+#Preview {
+    LevelView()
+        .environmentObject(LevelService())    
 }
