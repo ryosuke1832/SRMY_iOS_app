@@ -21,15 +21,16 @@ class HabitService: ObservableObject {
 
     
     // add habit
-    func addHabit(name: String, goalDays: Int) {
-        let newHabit = Habit(name: name, goalDays: goalDays)
+    func addHabit(name: String) {
+//        let newHabit = Habit(name: name, goalDays: goalDays)
+        let newHabit = Habit(name: name)
         habits.append(newHabit)
         saveHabits()
     }
     
 
     // update habit
-    func updateHabit(_ habit: Habit, name: String? = nil, goalDays: Int? = nil) {
+    func updateHabit(_ habit: Habit, name: String? = nil) {
         if let index = habits.firstIndex(where: { $0.id == habit.id }) {
         
             // update habit by new property
@@ -39,9 +40,9 @@ class HabitService: ObservableObject {
                 updatedHabit.name = name
             }
             
-            if let goalDays = goalDays {
-                updatedHabit.goalDays = goalDays
-            }
+//            if let goalDays = goalDays {
+//                updatedHabit.goalDays = goalDays
+//            }
         
             // save updated habit
             habits[index] = updatedHabit
@@ -100,10 +101,10 @@ class HabitService: ObservableObject {
         return Calendar.current.isDate(lastCompletedDay, inSameDayAs: today)
     }
     
-    // check goal is achieved or not
-    func isGoalAchieved(_ habit: Habit) -> Bool {
-        return habit.streakCount >= habit.goalDays
-    }
+//    // check goal is achieved or not
+//    func isGoalAchieved(_ habit: Habit) -> Bool {
+//        return habit.streakCount >= habit.goalDays
+//    }
     
     // save habot
     private func saveHabits() {
@@ -126,15 +127,15 @@ class HabitService: ObservableObject {
         }
     }
     
-    // Calculation of habit progress rate(%)
-    func progressPercentage(for habit: Habit) -> Double {
-        return min(Double(habit.streakCount) / Double(habit.goalDays), 1.0) * 100.0
-    }
-    
-    // Calculation of habit progress rate（0.0〜1.0）
-    func progressRatio(for habit: Habit) -> Double {
-        return min(Double(habit.streakCount) / Double(habit.goalDays), 1.0)
-    }
+//    // Calculation of habit progress rate(%)
+//    func progressPercentage(for habit: Habit) -> Double {
+//        return min(Double(habit.streakCount) / Double(habit.goalDays), 1.0) * 100.0
+//    }
+//    
+//    // Calculation of habit progress rate（0.0〜1.0）
+//    func progressRatio(for habit: Habit) -> Double {
+//        return min(Double(habit.streakCount) / Double(habit.goalDays), 1.0)
+//    }
 
     // format Date
     func formattedDate(_ date: Date) -> String {
