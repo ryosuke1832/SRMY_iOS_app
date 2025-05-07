@@ -11,10 +11,14 @@ class HabitService: ObservableObject {
     @Published var habits: [Habit] = []
     
     private let saveKey = "SavedHabits"
+    private let levelService: any LevelServiceProtocol
     
-    init() {
+    init(levelService: any LevelServiceProtocol) {
+        self.levelService = levelService
         loadHabits()
     }
+    
+
     
     // add habit
     func addHabit(name: String, goalDays: Int) {
@@ -64,6 +68,7 @@ class HabitService: ObservableObject {
                 // continious complete if yesterday have completed as well
                 if Calendar.current.isDate(lastCompletedDay, inSameDayAs: yesterday) {
                     habits[index].streakCount += 1
+                    
                 } else if !Calendar.current.isDate(lastCompletedDay, inSameDayAs: today) {
                     // if not yesterday not today, reset continuious log
                     habits[index].streakCount = 1
@@ -72,8 +77,16 @@ class HabitService: ObservableObject {
                 // first complete
                 habits[index].streakCount = 1
             }
-            
+
             habits[index].lastCompletedDate = today
+            
+            // ---------- XP awarding ----------
+            let completedToday = habits.filter { isCompletedToday($0) }.count - 1
+            let comboIndex     = max(0, completedToday)                            //count the total task completed today
+            let streak         = habits[index].streakCount                         //get streak
+
+            levelService.awardXP(base: 25, comboIndex: comboIndex, streak: streak)  //call levelService 
+            // ----------------------------------
             saveHabits()
         }
     }

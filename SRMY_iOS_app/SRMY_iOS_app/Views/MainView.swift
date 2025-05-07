@@ -9,7 +9,10 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var habitService: HabitService
+    @EnvironmentObject var levelService: LevelService
     @State private var showingAddHabit = false
+    @State private var showingLevelView = false
+    @State private var showingLevelUp   = false
     
     var body: some View {
         NavigationView {
@@ -43,14 +46,37 @@ struct MainView: View {
             }) {
                 Image(systemName: "plus")
             })
+            .navigationBarItems(trailing: Button(action: {
+                showingLevelView = true
+            }) {
+                Image(systemName: "star.circle.fill")
+            })
             .sheet(isPresented: $showingAddHabit) {
                 HabitModifyView()
             }
+            .sheet(isPresented: $showingLevelView) {
+                  LevelView()
+                      .environmentObject(levelService)
+              }
+              .sheet(isPresented: $showingLevelUp) {         // 🎉 celebration
+                  LevelUpView(newLevel: levelService.profile.level)
+                      .environmentObject(levelService)
+              }
+            // -------- listen for level‑up ----------
+              .onReceive(levelService.levelUpPublisher) { _ in
+                  showingLevelUp = true
+              }
         }
     }
 }
 
 #Preview {
+    let ls = LevelService()
+    let habits = HabitService(levelService: ls)
     MainView()
-        .environmentObject(HabitService())
+        .environmentObject(ls)
+        .environmentObject(habits)
 }
+        
+
+

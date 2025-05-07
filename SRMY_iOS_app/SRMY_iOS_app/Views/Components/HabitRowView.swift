@@ -12,6 +12,7 @@ import SwiftUI
 
 struct HabitRowView: View {
     @EnvironmentObject var habitService: HabitService
+    @EnvironmentObject var levelService: LevelService
     let habit: Habit
     
     var body: some View {
@@ -52,6 +53,11 @@ struct HabitRowView: View {
 }
 
 #Preview {
+  
+    let ls = LevelService()
     HabitListView()
-        .environmentObject(HabitService())
+        .environmentObject(ls)
+        .environmentObject(HabitService(levelService: ls))
+    
+
 }

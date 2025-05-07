@@ -1,5 +1,5 @@
 //
-//  habit.swift
+//  User.swift
 //  SRMY_iOS_app
 //
 //  Created by user on 2025/05/04.
@@ -8,14 +8,10 @@
 import Foundation
 import SwiftUI
 
+//can be updated later, currently only the necessity for LevelService.js
 
-//struct Bubble:Identifiable{
-//    let id = UUID()
-//    var position:CGPoint
-//    var color:Color
-//    var isPopped:Bool = false
-//    var speed:Double
-//    var point:Int
-//    var creationTime: Date = Date()
-//
-//}
+struct UserProfile: Codable {
+    var name:  String        = "Player"
+    var level: Int           = 1
+    var xp:    Int           = 0
+}
