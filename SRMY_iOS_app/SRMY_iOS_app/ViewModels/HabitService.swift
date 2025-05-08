@@ -86,7 +86,7 @@ class HabitService: ObservableObject {
             let comboIndex     = max(0, completedToday)                            //count the total task completed today
             let streak         = habits[index].streakCount                         //get streak
 
-            levelService.awardXP(base: 25, comboIndex: comboIndex, streak: streak)  //call levelService 
+            levelService.awardXP(habitID: habit.id,base: 25, comboIndex: comboIndex, streak: streak)  //call levelService
             // ----------------------------------
             saveHabits()
         }
@@ -126,7 +126,7 @@ class HabitService: ObservableObject {
             }
         }
     }
-    
+
 //    // Calculation of habit progress rate(%)
 //    func progressPercentage(for habit: Habit) -> Double {
 //        return min(Double(habit.streakCount) / Double(habit.goalDays), 1.0) * 100.0

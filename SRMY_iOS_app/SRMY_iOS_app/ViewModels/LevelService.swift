@@ -10,6 +10,8 @@ import Foundation
 import SwiftUI
 import Combine
 
+
+
 protocol LevelServiceProtocol: ObservableObject {
     var profile: UserProfile { get }// current XP & level
     var levelText: String { get }
@@ -18,12 +20,14 @@ protocol LevelServiceProtocol: ObservableObject {
     
 
     func xpNeeded(for level: Int) -> Int
-    func awardXP(base: Int, comboIndex: Int, streak: Int)                    // comboIndex: 0,1,2…
+    func awardXP(habitID:UUID, base: Int, comboIndex: Int, streak: Int)                    // comboIndex: 0,1,2…
 }
 
 final class LevelService: LevelServiceProtocol {
     @Published private(set) var profile = UserProfile(name: "Player")        //can be replaced with real username
+    
 
+    
     private let levelUpSubject = PassthroughSubject<Int,Never>()
     var levelUpPublisher: AnyPublisher<Int,Never> { levelUpSubject.eraseToAnyPublisher() }
 
@@ -34,8 +38,10 @@ final class LevelService: LevelServiceProtocol {
     
     // simple curve: 50, 75, 100 XP…
     func xpNeeded(for level: Int) -> Int { 50 + 25 * (level - 1) }
-     
-    func awardXP(base: Int, comboIndex: Int, streak: Int) {
+    struct XPGainEvent { let habitID: UUID; let amount: Int }
+    let xpAwardedPublisher = PassthroughSubject<XPGainEvent,Never>()
+
+    func awardXP(habitID:UUID, base: Int, comboIndex: Int, streak: Int) {
         let comboMult  = 1.0 + 0.25 * Double(comboIndex)                       // 1×, 1.2×, 1.4×…
         let streakMult = streakMultiplier(for: streak)                         // from HabitService
         let gained     = Int(Double(base) * comboMult * streakMult)
@@ -45,11 +51,12 @@ final class LevelService: LevelServiceProtocol {
             profile.xp -= xpNeeded(for: profile.level)
             profile.level += 1
             levelsGained += 1
-            // TODO: post level‑up notification
         }
         if levelsGained > 0 {
             levelUpSubject.send(levelsGained)                  // fire once
         }
+        xpAwardedPublisher.send(.init(habitID: habitID, amount: gained))
+
     }
 }
 private func streakMultiplier(for streak: Int) -> Double {

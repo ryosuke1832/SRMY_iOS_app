@@ -15,6 +15,9 @@ struct HabitRowView: View {
     @EnvironmentObject var levelService: LevelService
     let habit: Habit
     
+    @State private var showXPGain = false
+    @State private var lastGain   = 0
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
@@ -45,12 +48,20 @@ struct HabitRowView: View {
                         .font(.title2)
                         .foregroundColor(.blue)
                         .frame(width: 44, height: 44)
+
                 }
             } else {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.title2)
                     .foregroundColor(.green)
                     .frame(width: 44, height: 44)
+                    .overlay(
+                        Text("+\(lastGain)")
+                            .font(.caption.bold())
+                            .foregroundStyle(.tint)
+                            .offset(y: -30)
+                            .opacity(showXPGain ? 1 : 0)
+                    )
             }
         }
         .padding()
@@ -59,6 +70,14 @@ struct HabitRowView: View {
                 .fill(Color.white)
                 .shadow(color: Color.black.opacity(0.05), radius: 5)
         )
+        .onReceive(levelService.xpAwardedPublisher) { event in
+            guard event.habitID == habit.id else { return }
+            lastGain = event.amount
+            withAnimation(.spring()) { showXPGain = true }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                withAnimation(.easeOut) { showXPGain = false }
+            }
+        }
     }
 }
 
