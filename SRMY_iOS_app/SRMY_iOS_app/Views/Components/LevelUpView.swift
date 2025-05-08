@@ -7,11 +7,45 @@
 
 import SwiftUI
 import ConfettiSwiftUI        // already in the project
-// import Lottie               // uncomment if you use a .json badge animation
 
-/// A full‑screen celebration shown once per multi‑level jump.
+
+/// A random gradiant pattern full‑screen celebration shown once per multi‑level jump.
 ///
-/// Present with `.sheet(isPresented:)` or `.fullScreenCover`.
+
+private struct Palette {
+    let gradient: [Color]     // background
+    let confetti: [Color]     // matching confetti pieces
+    let emojis:  [String]     // optional custom confetti emoji
+
+    static let all: [Palette] = [
+        .init(
+            gradient: [.indigo, .purple],
+            confetti: [.yellow, .white, .orange],
+            emojis:  ["⭐️"]
+        ),
+        .init(
+            gradient: [.blue, .mint],
+            confetti: [.white, .cyan, .mint],
+            emojis:  ["💎","🌀"]
+        ),
+        .init(
+            gradient: [.pink, .red],
+            confetti: [.white, .pink, .red],
+            emojis:  ["❤️","🌸"]
+        ),
+        .init(
+            gradient: [.orange, .yellow],
+            confetti: [.orange, .yellow, .white],
+            emojis:  ["🔥","✨"]
+        ),
+        .init(
+            gradient: [.teal, .black],
+            confetti: [.teal, .white, .gray],
+            emojis:  ["🚀","🪐"]
+        )
+    ]
+}
+
 struct LevelUpView: View {
     let newLevel: Int
     
@@ -19,23 +53,27 @@ struct LevelUpView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var levelService: LevelService
     @State private var confetti = 0
-    
+    @State private var palette = Palette.all.randomElement()!
     var body: some View {
         ZStack {
-            // MARK: ‑‑ Color + subtle vignette background
+            // MARK: ‑‑ Random color from palette
             LinearGradient(
-                colors: [Color.indigo.opacity(0.8), Color.purple.opacity(0.9)],
-                startPoint: .top, endPoint: .bottom)
+                colors: palette.gradient,
+                startPoint: .top, endPoint: .bottom
+            )
             .ignoresSafeArea()
-            
+            AngularGradient(gradient: Gradient(colors: palette.gradient),
+                            center: .center)
+                .blendMode(.overlay)
+                .opacity(0.3)
+                .rotationEffect(.degrees(confetti == 0 ? 0 : 360))
+                .animation(.linear(duration: 8).repeatForever(autoreverses: false),
+                           value: confetti)
+
             // MARK: ‑‑ Content
             VStack(spacing: 32) {
                 Spacer()
-                
-                // optional Lottie badge
-//                LottieView(name: "level_badge", loopMode: .playOnce)
-//                    .frame(width: 180, height: 180)
-                
+                                
                 // level number text
                 Text("Level \(newLevel)!")
                     .font(.system(size: 56, weight: .heavy, design: .rounded))
@@ -63,11 +101,13 @@ struct LevelUpView: View {
             .multilineTextAlignment(.center)
             
             // MARK: ‑‑ Confetti burst
-            Color.clear                                  // attach to invisible view
+            Color.clear
                 .confettiCannon(trigger: $confetti,
-                                num: 40,  // pieces
-                                confettis: [.text("⭐️"), .shape(.triangle), .shape(.circle)],
-                                colors: [.yellow, .white, .orange])
+                                num: 40,
+                                confettis: palette.emojis.map { .text($0) } +
+                                           [.shape(.triangle), .shape(.circle)],
+                                colors: palette.confetti)
+
         }
         .onAppear {
             confetti += 1
@@ -85,5 +125,5 @@ struct LevelUpView: View {
 }
 
 #Preview {
-    LevelUpView(newLevel: 7)
+    LevelUpView(newLevel: 2)
 }
