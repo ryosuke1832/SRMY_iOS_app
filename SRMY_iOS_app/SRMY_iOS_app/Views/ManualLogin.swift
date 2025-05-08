@@ -49,7 +49,7 @@ struct ManualLogin: View {
                 .padding()
 
                 // Hidden NavigationLink to trigger programmatic navigation
-                NavigationLink(destination: MainView(), isActive: $isLoggedIn) {
+                NavigationLink(destination: WelcomeView(), isActive: $isLoggedIn) {
                     EmptyView()
                 }
                 
