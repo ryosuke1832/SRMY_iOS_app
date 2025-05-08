@@ -14,23 +14,41 @@ struct ProfileView: View {
     @State private var weight: String = ""
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("User Profile")
-                .font(.largeTitle)
-                .padding(.top)
+         ZStack {
+             // Background gradient
+             LinearGradient(colors: [.blue, .mint], startPoint: .top, endPoint: .bottom)
+                 .ignoresSafeArea()
+             
+             VStack(spacing: 20) {
+                 Spacer()
+                 
+                 // Styled header
+                 Text("User Profile")
+                     .font(.system(size: 40, weight: .heavy, design: .rounded))
+                     .foregroundStyle(.white)
+                     .shadow(radius: 10)
 
-            Form {
-                Section(header: Text("User Info")) {
-                    ProfileRow(label: "Username", value: username)
-                    ProfileRow(label: "Age", value: age)
-                    ProfileRow(label: "Height (cm)", value: height)
-                    ProfileRow(label: "Weight (kg)", value: weight)
-                }
-            }
-        }
-        .onAppear(perform: loadUserData)
-        .navigationTitle("Profile")
-    }
+                 VStack(spacing: 16) {
+                     ProfileRow(label: "Username", value: username)
+                     ProfileRow(label: "Age", value: age)
+                     ProfileRow(label: "Height (cm)", value: height)
+                     ProfileRow(label: "Weight (kg)", value: weight)
+                 }
+                 .padding()
+                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+                 .padding(.horizontal)
+
+                 Spacer()
+             }
+             .multilineTextAlignment(.center)
+         }
+         .onAppear {
+             loadUserData()
+         }
+         .navigationTitle("")
+         .navigationBarHidden(true)
+     }
+
 
     func loadUserData() {
         username = UserDefaults.standard.string(forKey: "username") ?? "N/A"
@@ -47,12 +65,18 @@ struct ProfileRow: View {
     var body: some View {
         HStack {
             Text(label)
-                .fontWeight(.semibold)
+                .font(.headline)
+                .foregroundColor(.white)
             Spacer()
             Text(value)
-                .foregroundColor(.gray)
+                .font(.body)
+                .foregroundColor(.white.opacity(0.8))
         }
-        .padding(.vertical, 4)
     }
+}
+
+
+#Preview {
+    ProfileView()
 }
 

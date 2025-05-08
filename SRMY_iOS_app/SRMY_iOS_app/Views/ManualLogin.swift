@@ -76,3 +76,7 @@ struct ManualLogin: View {
         }
     }
 }
+
+#Preview {
+    ManualLogin()
+}

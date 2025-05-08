@@ -91,9 +91,12 @@ struct LevelUpView: View {
                 Button(action: dismiss.callAsFunction) {
                     Text("Continue")
                         .font(.headline.bold())
-                        .padding(.horizontal, 40)
+                        .foregroundColor(.white)
                         .padding(.vertical, 14)
-                        .background(.ultraThinMaterial, in: Capsule())
+                        .frame(maxWidth: .infinity)
+                        .background(.green.opacity(0.9), in: RoundedRectangle(cornerRadius: 20)
+                        )
+                        .padding()
                 }
                 .accessibilityIdentifier("continueLevelUp")
                 .padding(.bottom, 40)

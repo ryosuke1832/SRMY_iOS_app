@@ -7,18 +7,24 @@
 
 import SwiftUI
 
-//struct ContentView: View {
-//    var body: some View {
-//        VStack {
-//            Image(systemName: "globe")
-//                .imageScale(.large)
-//                .foregroundStyle(.tint)
-//            Text("Hello, world!")
-//        }
-//        .padding()
-//    }
-//}
-//
-//#Preview {
-//    ContentView()
-//}
+struct TabBarView: View {
+    var body: some View {
+        TabView {
+            HabitModifyView()
+                .tabItem() {
+                    Image("settings-white")
+                    Text("Settings")
+                }
+            PersonalSettingView()
+                .badge(10)
+                .tabItem() {
+                    Image("user-white")
+                    Text("Profile")
+                }
+        }
+    }
+}
+
+#Preview {
+    TabBarView()
+}

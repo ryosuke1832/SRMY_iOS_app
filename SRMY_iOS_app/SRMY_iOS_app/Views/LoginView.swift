@@ -16,61 +16,93 @@ struct LoginView: View {
     @StateObject private var authService = AuthService()
 
     var body: some View {
-        NavigationView {
-            VStack {
-                if isLoggedIn {
-                    Text("Welcome, Apple or Google User!")
-                        .font(.headline)
-                        .padding()
-                } else {
-                    SignInWithAppleButton(
-                        .signIn,
-                        onRequest: { request in
-                            request.requestedScopes = [.fullName, .email]
-                        },
-                        onCompletion: { result in
-                            AuthService.shared.handleAppleLogin(result: result) { success in
-                                isLoggedIn = success
-                            }
-                        }
-                    )
-                    .signInWithAppleButtonStyle(.black)
-                    .frame(height: 50)
-                    .padding()
+        NavigationStack {
+            ZStack {
+                // Background Gradient
+                LinearGradient(colors: [.blue, .mint],
+                               startPoint: .top,
+                               endPoint: .bottom)
+                    .ignoresSafeArea()
 
-                    Button("Sign in with Google") {
-                                        if let rootVC = UIApplication.shared.connectedScenes
-                                            .compactMap({ ($0 as? UIWindowScene)?.keyWindow?.rootViewController })
-                                            .first {
-                                            AuthService.shared.handleGoogleLogin(presentingViewController: rootVC) { success in
-                                                isLoggedIn = success
-                                            }
-                                        }
-                                    }
-                                    .frame(height: 50)
-                                    .padding()
-                                    .background(Color.red)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
+                VStack(spacing: 24) {
+                    Spacer()
 
-                    NavigationLink(destination: ManualLogin()) {
-                        Text("Manual Login")
-                            .foregroundColor(.white)
+                    if isLoggedIn {
+                        Text("Welcome, Apple or Google User!")
+                            .font(.title3.weight(.medium))
+                            .foregroundStyle(.white)
                             .padding()
-                            .background(Color.blue)
-                            .cornerRadius(10)
+                    } else {
+                        Text("Welcome, Go Getter")
+                            .font(.system(size: 34, weight: .heavy, design: .rounded))
+                            .foregroundStyle(.white)
+                            .shadow(radius: 10)
+
+                        SignInWithAppleButton(
+                            .signIn,
+                            onRequest: { request in
+                                request.requestedScopes = [.fullName, .email]
+                            },
+                            onCompletion: { result in
+                                AuthService.shared.handleAppleLogin(result: result) { success in
+                                    isLoggedIn = success
+                                }
+                            }
+                        )
+                        .signInWithAppleButtonStyle(.black)
+                        .frame(height: 50)
+                        .clipShape(Capsule())
+                        .padding(.horizontal)
+
+                        Button(action: {
+                            if let rootVC = UIApplication.shared.connectedScenes
+                                .compactMap({ ($0 as? UIWindowScene)?.keyWindow?.rootViewController })
+                                .first {
+                                AuthService.shared.handleGoogleLogin(presentingViewController: rootVC) { success in
+                                    isLoggedIn = success
+                                }
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: "globe")
+                                Text("Sign in with Google")
+                                    .bold()
+                            }
+                            .foregroundColor(.black)
+                            .padding(.vertical, 14)
+                            .frame(maxWidth: .infinity)
+                            .background(.white.opacity(0.9), in: RoundedRectangle(cornerRadius: 30)
+                            )
+                        }
+                        .padding(.horizontal)
+
+                        NavigationLink(destination: ManualLogin()) {
+                            Text("New User Login")
+                                .foregroundColor(.white)
+                                .padding(.vertical, 14)
+                                .frame(maxWidth: .infinity)
+                                .background(.ultraThinMaterial, in: Capsule())
+                        }
+                        .padding(.horizontal)
+                    }
+
+                    Spacer()
+
+                    // Auto-navigation to MainView after login
+                    NavigationLink(destination: MainView(), isActive: $isLoggedIn) {
+                        EmptyView()
                     }
                 }
-
-                // Auto-navigation to MainView after login
-                NavigationLink(destination: MainView(), isActive: $isLoggedIn) {
-                    EmptyView()
-                }
+                .padding(.bottom, 30)
+                .multilineTextAlignment(.center)
             }
-            .navigationTitle("Login")
+            .toolbar(.hidden)
         }
     }
-
-    
 }
+
+#Preview {
+    LoginView()
+}
+
 

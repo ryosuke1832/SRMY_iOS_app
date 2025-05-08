@@ -87,3 +87,8 @@ struct PersonalSettingView: View {
         errorMessage = nil
     }
 }
+
+#Preview {
+    PersonalSettingView()
+}
+
