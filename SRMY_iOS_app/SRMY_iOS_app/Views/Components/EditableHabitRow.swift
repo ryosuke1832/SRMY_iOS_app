@@ -15,7 +15,8 @@ struct EditableHabitRow: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(habit.name)
-                    .font(.headline)
+                    .font(.system(.headline, design: .rounded))
+                    .foregroundColor(.primary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
@@ -31,7 +32,7 @@ struct EditableHabitRow: View {
                     .frame(width: 40, height: 40)
                     .background(
                         Circle()
-                            .fill(Color.gray.opacity(0.1))
+                            .fill(Color.white.opacity(0.9))
                     )
             }
         }
@@ -39,7 +40,8 @@ struct EditableHabitRow: View {
     }
 }
 
-//#Preview {
-//    EditableHabitRow()
-//}
+#Preview {
+    let sampleHabit = Habit(name: "Drink Water")
+    EditableHabitRow(habit: sampleHabit, onDelete: {})
+}
 

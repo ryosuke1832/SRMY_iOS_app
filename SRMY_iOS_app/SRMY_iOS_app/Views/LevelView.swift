@@ -22,22 +22,34 @@ struct LevelView: View {
         Double(levelService.xpNeeded(for: levelService.profile.level))
     }
     
-
+        
     var body: some View {
-        VStack {
-            Text(levelService.levelText).font(.title2).bold()
-            ProgressView(value: levelService.progress)
-                .frame(height: 12).tint(.green)
+        ZStack {
+            // Gradient background
+            LinearGradient(colors: [.blue, .mint],
+                           startPoint: .topLeading,
+                           endPoint: .bottomTrailing)
+            .ignoresSafeArea()
+            VStack {
+                Text(levelService.levelText).font(.title2).bold()
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .scaleEffect(1.2)
+                
+                ProgressView(value: levelService.progress)
+                    .frame(height: 12).tint(.green)
+
+            }
+            .padding()
+            .onReceive(levelService.levelUpPublisher) { _ in   // still celebrate
+                confettiCounter += 1
+            }
+            .confettiCannon(trigger: $confettiCounter)
         }
-        .padding()
-        .onReceive(levelService.levelUpPublisher) { _ in   // still celebrate
-            confettiCounter += 1
-        }
-        .confettiCannon(trigger: $confettiCounter)
     }
 }
 
 #Preview {
     LevelView()
-        .environmentObject(LevelService())    
+        .environmentObject(LevelService())
 }

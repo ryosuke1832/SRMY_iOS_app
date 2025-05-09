@@ -20,11 +20,9 @@ struct ProfileView: View {
                  .ignoresSafeArea()
              
              VStack(spacing: 20) {
-                 Spacer()
-                 
                  // Styled header
                  Text("User Profile")
-                     .font(.system(size: 40, weight: .heavy, design: .rounded))
+                     .font(.system(size: 30, weight: .bold, design: .rounded))
                      .foregroundStyle(.white)
                      .shadow(radius: 10)
 

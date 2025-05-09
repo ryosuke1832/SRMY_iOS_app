@@ -92,6 +92,16 @@ class HabitService: ObservableObject {
         }
     }
     
+    // Simulate disappearance after a short animation
+    func completeHabitWithDelay(_ habit: Habit) {
+        markHabitAsCompleted(habit)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.habits.removeAll { $0.id == habit.id }
+        }
+    }
+
+    
     // Check if habit is completed today
     func isCompletedToday(_ habit: Habit) -> Bool {
         guard let lastCompleted = habit.lastCompletedDate else { return false }
@@ -106,7 +116,7 @@ class HabitService: ObservableObject {
 //        return habit.streakCount >= habit.goalDays
 //    }
     
-    // save habot
+    // save habit
     private func saveHabits() {
         do {
             let encodedData = try JSONEncoder().encode(habits)

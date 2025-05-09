@@ -25,7 +25,7 @@ struct HabitModifyView: View {
                 Spacer(minLength: 20)
 
                 Text("Set your goals")
-                    .font(.system(size: 36, weight: .heavy, design: .rounded))
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                     .shadow(radius: 8)
 

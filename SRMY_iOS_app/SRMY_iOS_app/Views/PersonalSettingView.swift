@@ -17,57 +17,115 @@ struct PersonalSettingView: View {
     @State private var errorMessage: String? = nil
 
     var body: some View {
-        VStack {
-            Text("Personal Settings")
-                .font(.largeTitle)
-                .padding()
+        NavigationStack {
+                    ZStack {
+                        // Background Gradient
+                        LinearGradient(colors: [.blue, .mint],
+                                       startPoint: .top,
+                                       endPoint: .bottom)
+                            .ignoresSafeArea()
 
-            Form {
-                Section(header: Text("User Info")) {
-                    TextField("Username", text: $username)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    
-                    SecureField("Password", text: $password)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    
-                    TextField("Age", text: $age)
-                        .keyboardType(.numberPad)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    
-                    TextField("Height (cm)", text: $height)
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    
-                    TextField("Weight (kg)", text: $weight)
-                        .keyboardType(.decimalPad)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                }
-                
-                if let errorMessage = errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .padding()
-                }
+                        VStack(spacing: 24) {
+                            Text("Personal Settings")
+                                .font(.system(size: 30, weight: .bold, design: .rounded))
+                                .foregroundColor(.white)
+                                .shadow(radius: 10)
 
-                Button(action: saveUserData) {
-                    Text("Save")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                            Group {
+                                TextField("Username", text: $username)
+                                SecureField("Password", text: $password)
+                                TextField("Age", text: $age)
+                                    .keyboardType(.numberPad)
+                                TextField("Height (cm)", text: $height)
+                                    .keyboardType(.decimalPad)
+                                TextField("Weight (kg)", text: $weight)
+                                    .keyboardType(.decimalPad)
+                            }
+                            .padding()
+                            .background(.white.opacity(0.9))
+                            .cornerRadius(12)
+                            .padding(.horizontal)
+                            .foregroundColor(.black)
+
+                            if let errorMessage = errorMessage {
+                                Text(errorMessage)
+                                    .foregroundColor(.red)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal)
+                            }
+
+                            Button(action: saveUserData) {
+                                Text("Save")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(Color.green.opacity(0.9))
+                                    )
+                            }
+                            .padding(.horizontal)
+
+                            Spacer()
+                        }
+                        .padding(.bottom)
+                    }
+                    .toolbar(.hidden)
                 }
-                .padding()
             }
-            .padding()
-        }
-        .navigationTitle("Personal Settings")
-    }
+        
+//        VStack {
+//            Text("Personal Settings")
+//                .font(.system(size: 30, weight: .heavy, design: .rounded))
+//                .padding()
+//
+//            Form {
+//                Section(header: Text("User Info")) {
+//                    TextField("Username", text: $username)
+//                        .textFieldStyle(RoundedBorderTextFieldStyle())
+//                        .padding()
+//                    
+//                    SecureField("Password", text: $password)
+//                        .textFieldStyle(RoundedBorderTextFieldStyle())
+//                        .padding()
+//                    
+//                    TextField("Age", text: $age)
+//                        .keyboardType(.numberPad)
+//                        .textFieldStyle(RoundedBorderTextFieldStyle())
+//                        .padding()
+//                    
+//                    TextField("Height (cm)", text: $height)
+//                        .keyboardType(.decimalPad)
+//                        .textFieldStyle(RoundedBorderTextFieldStyle())
+//                        .padding()
+//                    
+//                    TextField("Weight (kg)", text: $weight)
+//                        .keyboardType(.decimalPad)
+//                        .textFieldStyle(RoundedBorderTextFieldStyle())
+//                        .padding()
+//                }
+//                
+//                if let errorMessage = errorMessage {
+//                    Text(errorMessage)
+//                        .foregroundColor(.red)
+//                        .padding()
+//                }
+//
+//                Button(action: saveUserData) {
+//                    Text("Save")
+//                        .frame(maxWidth: .infinity)
+//                        .padding()
+//                        .background(Color.blue)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(10)
+//                }
+//                .padding()
+//            }
+//            .padding()
+//        }
+//        .navigationTitle("Personal Settings")
+//    }
 
     // Save user data to UserDefaults
     func saveUserData() {

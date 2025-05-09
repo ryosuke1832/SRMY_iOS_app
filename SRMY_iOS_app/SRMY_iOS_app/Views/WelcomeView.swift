@@ -22,7 +22,7 @@ struct WelcomeView: View {
                     .font(.title2)
                     .foregroundColor(.blue)
 
-                Text("Tap anywhere to continue")
+                Text("Tap anywhere to start")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
