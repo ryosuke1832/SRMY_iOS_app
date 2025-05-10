@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isLoggedIn: Bool = UserDefaults.standard.bool(forKey: "isLoggedIn")
+    //@State private var isLoggedIn: Bool = UserDefaults.standard.bool(forKey: "isLoggedIn")
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+    //@State private var selectedTab = 0
     var body: some View {
         if isLoggedIn {
             WelcomeView()
             } else {
-                    LoginView()
+                LoginView()
             }
         
     }
+    
 }
 
 
