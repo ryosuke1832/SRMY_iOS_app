@@ -84,6 +84,9 @@ struct ManualLogin: View {
             if success {
                 isLoggedIn = true
                 errorMessage = nil
+                UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                // send notification
+                NotificationCenter.default.post(name: NSNotification.Name("LoggedIn"), object: nil)
             } else {
                 errorMessage = message
             }

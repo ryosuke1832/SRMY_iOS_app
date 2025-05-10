@@ -35,7 +35,7 @@ struct WelcomeView: View {
                 username = UserDefaults.standard.string(forKey: "username") ?? "Guest"
             }
             .background(
-                NavigationLink(destination: MainView(), isActive: $navigateToMain) {
+                NavigationLink(destination: MainView(selectedTab: .constant(0)), isActive: $navigateToMain) {
                     EmptyView()
                 }
                 .hidden()

@@ -89,7 +89,7 @@ struct LoginView: View {
                     Spacer()
 
                     // Auto-navigation to MainView after login
-                    NavigationLink(destination: MainView(), isActive: $isLoggedIn) {
+                    NavigationLink(destination: MainView(selectedTab: .constant(0)), isActive: $isLoggedIn) {
                         EmptyView()
                     }
                 }
@@ -104,5 +104,4 @@ struct LoginView: View {
 #Preview {
     LoginView()
 }
-
 
