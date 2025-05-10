@@ -12,12 +12,14 @@ struct MainView: View {
     @State private var showingEditHabits = false
     @State private var showingLevelView = false
     @State private var showingLevelUp = false
+    @Binding var selectedTab: Int
     
     var body: some View {
         ZStack {
             // Background Gradient
             LinearGradient(colors: [.blue, .mint], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
+
 
             VStack(spacing: 20) {
                 // Header area with level indicator and edit button
@@ -105,9 +107,13 @@ struct MainView: View {
                             }
                             .padding(.horizontal)
                         }
+                        .padding(.bottom, 90) // for tabBar
                     }
+                TabBarView(selectedTab: $selectedTab)
+                    .padding(.bottom, 0)
                 }
-                .padding(.vertical)
+            .ignoresSafeArea(edges: .bottom)
+
             }
             .navigationBarHidden(true)
             .sheet(isPresented: $showingEditHabits) {
@@ -128,15 +134,16 @@ struct MainView: View {
 }
 
 
+struct MainViewWrapper: View {
+    @State private var selectedTab: Int = 0
+    
+    var body: some View {
+        MainView(selectedTab: $selectedTab)
+            .environmentObject(LevelService())
+            .environmentObject(HabitService(levelService: LevelService()))
+    }
+}
+
 #Preview {
-    let ls = LevelService()
-    let habits = HabitService(levelService: ls)
-    
-    // Add some sample habits for preview
-        habits.addHabit(name: "Run for 30 minutes")
-        habits.addHabit(name: "Drink 8 glasses of water")
-    
-    return MainView()
-        .environmentObject(ls)
-        .environmentObject(habits)
+    MainViewWrapper()
 }

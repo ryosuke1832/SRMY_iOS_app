@@ -85,6 +85,9 @@ class HabitService: ObservableObject {
 
             levelService.awardXP(habitID: habit.id,base: 25, comboIndex: comboIndex, streak: streak)  //call levelService
             // ----------------------------------
+            
+            habits[index].completionHistory.append(today)
+
             saveHabits()
         }
     }
@@ -96,6 +99,18 @@ class HabitService: ObservableObject {
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 //            self.habits.removeAll { $0.id == habit.id }
 //        }
+    }
+    
+    
+    // get histroy of completion of habits 
+    func completionHistoryForLast(days: Int, for habit: Habit) -> [Bool] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        return (0..<days).map { dayOffset in
+            let targetDate = calendar.date(byAdding: .day, value: -dayOffset, to: today)!
+            return habit.completionHistory.contains { calendar.isDate($0, inSameDayAs: targetDate) }
+        }
     }
 
     

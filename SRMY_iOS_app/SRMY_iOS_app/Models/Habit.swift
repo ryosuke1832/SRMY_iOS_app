@@ -16,6 +16,7 @@ struct Habit: Identifiable, Codable, Equatable {
     var startDate: Date
     var streakCount: Int
     var lastCompletedDate: Date?
+    var completionHistory: [Date] = []
     
 
     init(
@@ -24,14 +25,16 @@ struct Habit: Identifiable, Codable, Equatable {
 //        goalDays: Int,
         startDate: Date = Date(),
         streakCount: Int = 0,
-        lastCompletedDate: Date? = nil
+        lastCompletedDate: Date? = nil,
+        completionHistory: [Date] = []
     ) {
         self.id = id
         self.name = name
-//        self.goalDays = goalDays
         self.startDate = startDate
         self.streakCount = streakCount
         self.lastCompletedDate = lastCompletedDate
+        self.completionHistory = []
+        
     }
     
 

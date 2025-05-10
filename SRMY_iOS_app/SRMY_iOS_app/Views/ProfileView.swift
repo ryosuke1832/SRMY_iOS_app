@@ -12,6 +12,7 @@ struct ProfileView: View {
     @State private var age: String = ""
     @State private var height: String = ""
     @State private var weight: String = ""
+    @Binding var tabBarSelection: Int
 
     var body: some View {
          ZStack {
@@ -37,7 +38,11 @@ struct ProfileView: View {
                  .padding(.horizontal)
 
                  Spacer()
+                 
+                 TabBarView(selectedTab: $tabBarSelection)
+                     .padding(.bottom, 0)
              }
+             .ignoresSafeArea(edges: .bottom)
              .multilineTextAlignment(.center)
          }
          .onAppear {
@@ -74,7 +79,15 @@ struct ProfileRow: View {
 }
 
 
-#Preview {
-    ProfileView()
+
+
+struct ProfileViewPreview: View {
+    @State private var tabBarSelection = 2  //
+    var body: some View {
+        ProfileView(tabBarSelection: $tabBarSelection)
+    }
 }
 
+#Preview {
+    ProfileViewPreview()
+}

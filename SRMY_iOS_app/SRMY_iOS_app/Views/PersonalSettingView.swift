@@ -15,6 +15,7 @@ struct PersonalSettingView: View {
     @State private var height: String = ""
     @State private var weight: String = ""
     @State private var errorMessage: String? = nil
+    @Binding var tabBarSelection: Int
 
     var body: some View {
         NavigationStack {
@@ -68,8 +69,12 @@ struct PersonalSettingView: View {
                             .padding(.horizontal)
 
                             Spacer()
+                            
+                            TabBarView(selectedTab: $tabBarSelection)
+
                         }
-                        .padding(.bottom)
+                        .ignoresSafeArea(edges: .bottom)
+                        .padding(.bottom,0)
                     }
                     .toolbar(.hidden)
                 }
@@ -146,7 +151,14 @@ struct PersonalSettingView: View {
     }
 }
 
-#Preview {
-    PersonalSettingView()
+struct PersonalSettingViewPreview: View {
+    @State private var tabBarSelection = 3  // 
+    
+    var body: some View {
+        PersonalSettingView(tabBarSelection: $tabBarSelection)
+    }
 }
 
+#Preview {
+    PersonalSettingViewPreview()
+}
