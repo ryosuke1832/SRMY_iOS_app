@@ -93,7 +93,7 @@ struct MainView: View {
                     } else {
                         ScrollView {
                             VStack(spacing: 15) {
-                                ForEach(habitService.habits) { habit in
+                                ForEach(habitService.habits.filter { !habitService.isCompletedToday($0)}) { habit in
                                     HabitRowView(habit: habit)
                                         .id(habit.id)
                                         .transition(

@@ -93,9 +93,9 @@ class HabitService: ObservableObject {
     func completeHabitWithDelay(_ habit: Habit) {
         markHabitAsCompleted(habit)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.habits.removeAll { $0.id == habit.id }
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//            self.habits.removeAll { $0.id == habit.id }
+//        }
     }
 
     
