@@ -40,9 +40,6 @@ class HabitService: ObservableObject {
                 updatedHabit.name = name
             }
             
-//            if let goalDays = goalDays {
-//                updatedHabit.goalDays = goalDays
-//            }
         
             // save updated habit
             habits[index] = updatedHabit
@@ -111,10 +108,7 @@ class HabitService: ObservableObject {
         return Calendar.current.isDate(lastCompletedDay, inSameDayAs: today)
     }
     
-//    // check goal is achieved or not
-//    func isGoalAchieved(_ habit: Habit) -> Bool {
-//        return habit.streakCount >= habit.goalDays
-//    }
+
     
     // save habit
     private func saveHabits() {
@@ -137,15 +131,7 @@ class HabitService: ObservableObject {
         }
     }
 
-//    // Calculation of habit progress rate(%)
-//    func progressPercentage(for habit: Habit) -> Double {
-//        return min(Double(habit.streakCount) / Double(habit.goalDays), 1.0) * 100.0
-//    }
-//    
-//    // Calculation of habit progress rate（0.0〜1.0）
-//    func progressRatio(for habit: Habit) -> Double {
-//        return min(Double(habit.streakCount) / Double(habit.goalDays), 1.0)
-//    }
+
 
     // format Date
     func formattedDate(_ date: Date) -> String {
