@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isLoggedIn: Bool = UserDefaults.standard.bool(forKey: "isLoggedIn")
     var body: some View {
-        LoginView() }
+        if isLoggedIn {
+            WelcomeView()
+            } else {
+                    LoginView()
+            }
+        
+    }
 }
 
 

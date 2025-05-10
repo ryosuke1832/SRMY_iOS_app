@@ -39,6 +39,17 @@ struct ProfileView: View {
 
                  Spacer()
                  
+                 Button(action: logoutUser) {
+                     Text("Logout")
+                         .font(.headline)
+                         .padding()
+                         .frame(maxWidth: .infinity)
+                         .background(Color.red.opacity(0.8))
+                         .foregroundColor(.white)
+                         .cornerRadius(12)
+                 }
+                 .padding(.horizontal)
+                 
                  TabBarView(selectedTab: $tabBarSelection)
                      .padding(.bottom, 0)
              }
@@ -58,6 +69,16 @@ struct ProfileView: View {
         age = UserDefaults.standard.string(forKey: "age") ?? "N/A"
         height = UserDefaults.standard.string(forKey: "height") ?? "N/A"
         weight = UserDefaults.standard.string(forKey: "weight") ?? "N/A"
+    }
+    
+    func logoutUser() {
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "username")
+        defaults.removeObject(forKey: "password")
+        defaults.set(false, forKey: "isLoggedIn")
+        
+        // Optionally redirect to login or welcome view
+        tabBarSelection = 0 // or trigger logout state in your app model
     }
 }
 

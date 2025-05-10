@@ -72,10 +72,11 @@ class AuthService: ObservableObject {
         var checkUserName: String = ""
         var checkPassword: String = ""
         
-        if(savedUsername == "" && savedPassword == "")
+        
+        if(savedUsername == "")
         {
             checkUserName = "Admin"
-            checkUserName = "password123"
+            checkPassword = "password123"
         }
         else
         {
