@@ -69,8 +69,6 @@ struct PersonalSettingView: View {
                             .padding(.horizontal)
 
                             Spacer()
-                            
-                            TabBarView(selectedTab: $tabBarSelection)
 
                         }
                         .ignoresSafeArea(edges: .bottom)
