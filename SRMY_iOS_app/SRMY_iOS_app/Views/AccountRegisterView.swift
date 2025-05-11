@@ -16,41 +16,74 @@ struct AccountRegisterView: View {
     @State private var errorMessage: String? = nil
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Register Account")
-                .font(.largeTitle)
-                .bold()
+        ZStack {
+            // Gradient background
+            LinearGradient(colors: [.blue, .mint],
+                           startPoint: .top,
+                           endPoint: .bottom)
+                .ignoresSafeArea()
 
-            TextField("Username", text: $username)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            VStack(spacing: 24) {
+                Spacer()
 
-            SecureField("Password", text: $password)
-                .textContentType(.oneTimeCode)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                Text("Register Account")
+                    .font(.system(size: 34, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .shadow(radius: 8)
 
-            SecureField("Confirm Password", text: $confirmPassword)
-                .textContentType(.oneTimeCode)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                Text("Create an account to get started")
+                    .font(.headline)
+                    .foregroundColor(.white.opacity(0.9))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
 
-            if let error = errorMessage {
-                Text(error)
-                    .foregroundColor(.red)
+                Group {
+                    TextField("Username", text: $username)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+
+                    SecureField("Password", text: $password)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+
+                    SecureField("Confirm Password", text: $confirmPassword)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+                }
+                .padding(.horizontal)
+
+                if let error = errorMessage {
+                    Text(error)
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                }
+
+                Button(action: registerUser) {
+                    Text("Register")
+                        .font(.headline.bold())
+                        .foregroundColor(.white)
+                        .padding(.vertical, 14)
+                        .frame(maxWidth: .infinity)
+                        .background(.green.opacity(0.9), in: RoundedRectangle(cornerRadius: 20))
+                }
+                .padding(.horizontal)
+
+                Spacer()
             }
-
-            Button("Register") {
-                registerUser()
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.blue)
-            .cornerRadius(8)
-
-            Spacer()
+            .multilineTextAlignment(.center)
+            .padding(.bottom, 30)
         }
-        .padding()
+        .toolbar(.hidden)
     }
 
-    func registerUser() {
+    // MARK: - Register Logic
+    private func registerUser() {
         guard !username.isEmpty, !password.isEmpty else {
             errorMessage = "All fields are required."
             return
@@ -66,7 +99,12 @@ struct AccountRegisterView: View {
         UserDefaults.standard.set(password, forKey: "password")
 
         errorMessage = nil
-        onRegisterComplete()  // Switch to LoginView
+        onRegisterComplete()  // Switch to LoginView or next step
     }
 }
 
+#Preview {
+    AccountRegisterView{
+        
+    }
+}
