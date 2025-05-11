@@ -15,7 +15,7 @@ struct ContentView: View {
    // @State private var isRegistered: Bool = false
     var body: some View {
         if isLoggedIn {
-            MainContainerView()
+//            MainContainerView()
             } else {
                 Group{
 
