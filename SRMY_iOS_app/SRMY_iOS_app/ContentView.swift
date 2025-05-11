@@ -13,7 +13,7 @@ struct ContentView: View {
     //@State private var selectedTab = 0
     var body: some View {
         if isLoggedIn {
-            WelcomeView()
+            MainContainerView()
             } else {
                 LoginView()
             }
