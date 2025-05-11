@@ -27,33 +27,39 @@ struct RegisterView: View {
                 VStack(spacing: 24) {
                     Spacer()
 
-                    Text("Create Account")
-                        .font(.system(size: 34, weight: .heavy, design: .rounded))
+                    Text("Register Account")
+                        .font(.system(size: 34, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
-                        .shadow(radius: 10)
+                        .shadow(radius: 8)
+
+                    Text("Create an account to get started")
+                        .font(.headline)
+                        .foregroundColor(.white.opacity(0.9))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
 
                     Group {
                         TextField("Username", text: $username)
                             .padding()
-                            .background(.white.opacity(0.9))
-                            .cornerRadius(12)
+                            .foregroundColor(.white)
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
 
                         SecureField("Password", text: $password)
                             .padding()
-                            .background(.white.opacity(0.9))
-                            .cornerRadius(12)
+                            .foregroundColor(.white)
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
 
                         SecureField("Confirm Password", text: $confirmPassword)
                             .padding()
-                            .background(.white.opacity(0.9))
-                            .cornerRadius(12)
+                            .foregroundColor(.white)
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
                     }
                     .padding(.horizontal)
 
-                    if let errorMessage = errorMessage {
-                        Text(errorMessage)
+                    if let error = errorMessage {
+                        Text(error)
                             .foregroundColor(.red)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
@@ -65,22 +71,24 @@ struct RegisterView: View {
                             .foregroundColor(.white)
                             .padding(.vertical, 14)
                             .frame(maxWidth: .infinity)
-                            .background(.green.opacity(0.9), in: Capsule())
+                            .background(.green.opacity(0.9), in: RoundedRectangle(cornerRadius: 20))
                     }
                     .padding(.horizontal)
 
-                    // Hidden nav‑link triggers when didRegister flips true
-                    NavigationLink(destination: WelcomeView(),
-                                   isActive: $didRegister) { EmptyView() }
-
                     Spacer()
                 }
-                .padding(.bottom, 30)
+                // Hidden nav‑link triggers when didRegister flips true
+                NavigationLink(destination: WelcomeView(),
+                               isActive: $didRegister) { EmptyView() }
                 .multilineTextAlignment(.center)
+                .padding(.bottom, 30)
             }
             .toolbar(.hidden)
-        
-    }
+        }
+
+
+
+
 
     // MARK: ‑‑ Helpers
     private func register() {
