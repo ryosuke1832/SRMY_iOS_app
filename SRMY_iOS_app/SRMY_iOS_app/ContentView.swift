@@ -11,11 +11,24 @@ struct ContentView: View {
     //@State private var isLoggedIn: Bool = UserDefaults.standard.bool(forKey: "isLoggedIn")
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     //@State private var selectedTab = 0
+    @State private var isRegistered: Bool = false
     var body: some View {
         if isLoggedIn {
             MainContainerView()
             } else {
-                LoginView()
+                Group{
+                    if isRegistered
+                    {
+                        LoginView()
+                    }
+                    else
+                    {
+                        AccountRegisterView(onRegisterComplete: {
+                            isRegistered = true
+                        })
+                    }
+                }
+                
             }
         
     }

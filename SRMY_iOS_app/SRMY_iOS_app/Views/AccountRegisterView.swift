@@ -25,9 +25,11 @@ struct AccountRegisterView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
 
             SecureField("Password", text: $password)
+                .textContentType(.oneTimeCode)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
 
             SecureField("Confirm Password", text: $confirmPassword)
+                .textContentType(.oneTimeCode)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
 
             if let error = errorMessage {

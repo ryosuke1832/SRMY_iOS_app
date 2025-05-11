@@ -75,6 +75,9 @@ struct PersonalSettingView: View {
                         .padding(.bottom,0)
                     }
                     .toolbar(.hidden)
+                    .onAppear {
+                                    loadUserData()
+                                }
                 }
             }
         
@@ -129,6 +132,14 @@ struct PersonalSettingView: View {
 //        }
 //        .navigationTitle("Personal Settings")
 //    }
+    
+    func loadUserData() {
+            username = UserDefaults.standard.string(forKey: "username") ?? ""
+            password = UserDefaults.standard.string(forKey: "password") ?? ""
+            age = UserDefaults.standard.string(forKey: "age") ?? ""
+            height = UserDefaults.standard.string(forKey: "height") ?? ""
+            weight = UserDefaults.standard.string(forKey: "weight") ?? ""
+        }
 
     // Save user data to UserDefaults
     func saveUserData() {
