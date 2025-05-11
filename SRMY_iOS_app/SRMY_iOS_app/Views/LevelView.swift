@@ -22,6 +22,9 @@ struct LevelView: View {
         Double(levelService.xpNeeded(for: levelService.profile.level))
     }
     
+//    @State private var isSpinning = false
+    @State private var rotationAngle: Double = 0
+
         
     var body: some View {
         ZStack {
@@ -36,8 +39,36 @@ struct LevelView: View {
                     .foregroundColor(.white)
                     .scaleEffect(1.2)
                 
-                ProgressView(value: levelService.progress)
-                    .frame(height: 12).tint(.green)
+//                ProgressView(value: levelService.progress)
+//                    .frame(height: 12).tint(.green)
+                
+                Image("level\(levelService.profile.level)")
+                    .resizable()
+                    .frame(width: 200, height: 200)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                    .shadow(radius: 10)
+                    .rotation3DEffect(
+                            .degrees(rotationAngle),
+                            axis: (x: 0, y: 1, z: 0)
+                        )
+                    .onAppear {
+                                // Spin once on appear
+                                withAnimation(.easeInOut(duration: 1.0)) {
+                                    rotationAngle += 360
+                                }
+                    }
+                    .onTapGesture {
+                        // Spin again each tap
+                        withAnimation(.easeInOut(duration: 1.0)) {
+                            rotationAngle += 360
+                        }
+                    }
+                
+                Text("Noble Novice").font(.title2).bold()
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .scaleEffect(1.2)
 
             }
             .padding()

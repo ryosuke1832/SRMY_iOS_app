@@ -38,7 +38,7 @@ struct HabitListLogView: View {
                                 
                                 if let lastDate = habit.lastCompletedDate {
                                     Text("Last completed: \(formatDate(lastDate))")
-                                        .font(.caption)
+                                        .font(.subheadline)
                                         .foregroundColor(.white.opacity(0.7))
                                 }
                             }

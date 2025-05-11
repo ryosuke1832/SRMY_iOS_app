@@ -80,58 +80,6 @@ struct PersonalSettingView: View {
                                 }
                 }
             }
-        
-//        VStack {
-//            Text("Personal Settings")
-//                .font(.system(size: 30, weight: .heavy, design: .rounded))
-//                .padding()
-//
-//            Form {
-//                Section(header: Text("User Info")) {
-//                    TextField("Username", text: $username)
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-//                        .padding()
-//                    
-//                    SecureField("Password", text: $password)
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-//                        .padding()
-//                    
-//                    TextField("Age", text: $age)
-//                        .keyboardType(.numberPad)
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-//                        .padding()
-//                    
-//                    TextField("Height (cm)", text: $height)
-//                        .keyboardType(.decimalPad)
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-//                        .padding()
-//                    
-//                    TextField("Weight (kg)", text: $weight)
-//                        .keyboardType(.decimalPad)
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-//                        .padding()
-//                }
-//                
-//                if let errorMessage = errorMessage {
-//                    Text(errorMessage)
-//                        .foregroundColor(.red)
-//                        .padding()
-//                }
-//
-//                Button(action: saveUserData) {
-//                    Text("Save")
-//                        .frame(maxWidth: .infinity)
-//                        .padding()
-//                        .background(Color.blue)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(10)
-//                }
-//                .padding()
-//            }
-//            .padding()
-//        }
-//        .navigationTitle("Personal Settings")
-//    }
     
     func loadUserData() {
             username = UserDefaults.standard.string(forKey: "username") ?? ""

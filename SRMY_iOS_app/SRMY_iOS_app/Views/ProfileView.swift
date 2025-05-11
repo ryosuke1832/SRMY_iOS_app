@@ -40,7 +40,7 @@ struct ProfileView: View {
                  Spacer().frame(height: 40)
                  
                  Button(action: logoutUser) {
-                     Text("Logout")
+                     Text("Log out")
                          .font(.headline)
                          .padding()
                          .frame(maxWidth: .infinity)
