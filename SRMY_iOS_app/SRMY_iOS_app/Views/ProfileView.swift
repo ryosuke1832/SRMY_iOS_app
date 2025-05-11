@@ -73,12 +73,12 @@ struct ProfileView: View {
     
     func logoutUser() {
         let defaults = UserDefaults.standard
-        defaults.removeObject(forKey: "username")
-        defaults.removeObject(forKey: "password")
+        //defaults.removeObject(forKey: "username")
+        //defaults.removeObject(forKey: "password")
         defaults.set(false, forKey: "isLoggedIn")
         
         // Optionally redirect to login or welcome view
-        tabBarSelection = 0 // or trigger logout state in your app model
+        //tabBarSelection = 0 // or trigger logout state in your app model
     }
 }
 
