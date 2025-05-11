@@ -16,7 +16,7 @@ struct LoginView: View {
     @StateObject private var authService = AuthService()
 
     var body: some View {
-        NavigationStack {
+  
             ZStack {
                 // Background Gradient
                 LinearGradient(colors: [.blue, .mint],
@@ -75,21 +75,25 @@ struct LoginView: View {
                             )
                         }
                         .padding(.horizontal)
-
-                        NavigationLink(destination: ManualLogin()) {
-                            Text("New User Login")
+                        NavigationLink(value: LoginFlow.Route.manualLogin) {
+                            Text("Login")                    // logged‑out users
                                 .foregroundColor(.white)
                                 .padding(.vertical, 14)
                                 .frame(maxWidth: .infinity)
                                 .background(.ultraThinMaterial, in: Capsule())
                         }
                         .padding(.horizontal)
+                        }
+
+                        NavigationLink(value: LoginFlow.Route.register) {
+                            Text("New User Register")               // never‑registered users
+                            
                     }
 
                     Spacer()
 
                     // Auto-navigation to MainView after login
-                    NavigationLink(destination: MainView(selectedTab: .constant(0)), isActive: $isLoggedIn) {
+                    NavigationLink(destination: RootTabContainer(), isActive: $isLoggedIn) {
                         EmptyView()
                     }
                 }
@@ -98,7 +102,7 @@ struct LoginView: View {
             }
             .toolbar(.hidden)
         }
-    }
+    
 }
 
 #Preview {

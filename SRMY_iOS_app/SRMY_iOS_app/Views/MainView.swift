@@ -58,7 +58,7 @@ struct MainView: View {
                         }
                     }
                     .padding(.horizontal)
-
+                    
                     if habitService.habits.isEmpty {
                         VStack(spacing: 20) {
                             Image(systemName: "list.bullet.clipboard")
@@ -108,7 +108,10 @@ struct MainView: View {
                             .padding(.horizontal)
                         }
                         .padding(.bottom, 0) // for tabBar
+
+                        
                     }
+
                 }
             .ignoresSafeArea(edges: .bottom)
 
@@ -127,6 +130,8 @@ struct MainView: View {
             }
             .onReceive(levelService.levelUpPublisher) { _ in
                 showingLevelUp = true
+                
+            
             }
         }
 }

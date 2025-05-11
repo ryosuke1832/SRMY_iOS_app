@@ -11,6 +11,8 @@ import SwiftUI
 struct SRMY_iOS_appApp: App {
     @StateObject private var levelService: LevelService
     @StateObject private var habitService: HabitService
+    @AppStorage("hasAccount")   private var hasAccount   = false
+    @AppStorage("isLoggedIn")   private var isLoggedIn   = false
 
 
     init() {
@@ -24,9 +26,13 @@ struct SRMY_iOS_appApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(levelService)
-                .environmentObject(habitService)
+            if isLoggedIn {                             // already authenticated
+                RootTabContainer()
+                    .environmentObject(levelService)
+                    .environmentObject(habitService)
+            } else {
+                LoginFlow()                             // whole onboarding / auth flow
+            }
         }
     }
 }

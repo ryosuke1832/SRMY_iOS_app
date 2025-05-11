@@ -10,12 +10,12 @@ import SwiftUI
 struct ManualLogin: View {
     @State private var username: String = ""
     @State private var password: String = ""
-    @State private var isLoggedIn = false
+    @State private var didLogin = false
     @State private var errorMessage: String? = nil
     @StateObject private var authService = AuthService()
 
     var body: some View {
-        NavigationStack {
+   
             ZStack {
                 // Gradient Background
                 LinearGradient(colors: [.blue, .mint],
@@ -66,7 +66,7 @@ struct ManualLogin: View {
                     }
                     .padding(.horizontal)
 
-                    NavigationLink(destination: WelcomeView(), isActive: $isLoggedIn) {
+                    NavigationLink(destination: WelcomeView(), isActive: $didLogin) {
                         EmptyView()
                     }
 
@@ -76,15 +76,15 @@ struct ManualLogin: View {
             }
             .toolbar(.hidden)
         }
-        .navigationBarBackButtonHidden(true)
-    }
+
+    
 
     func loginUser() {
         AuthService.shared.loginWithUsernamePassword(username: username, password: password) { success, message in
             if success {
-                isLoggedIn = true
+                didLogin = true
                 errorMessage = nil
-                UserDefaults.standard.set(true, forKey: "isLoggedIn")
+               // UserDefaults.standard.set(true, forKey: "isLoggedIn")
                 // send notification
                 NotificationCenter.default.post(name: NSNotification.Name("LoggedIn"), object: nil)
             } else {

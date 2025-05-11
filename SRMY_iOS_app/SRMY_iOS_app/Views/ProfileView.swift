@@ -13,6 +13,8 @@ struct ProfileView: View {
     @State private var height: String = ""
     @State private var weight: String = ""
     @Binding var tabBarSelection: Int
+    @AppStorage("isLoggedIn") private var isLoggedIn = false
+
 
     var body: some View {
          ZStack {
@@ -75,8 +77,8 @@ struct ProfileView: View {
         let defaults = UserDefaults.standard
         //defaults.removeObject(forKey: "username")
         //defaults.removeObject(forKey: "password")
-        defaults.set(false, forKey: "isLoggedIn")
-        
+       // defaults.set(false, forKey: "isLoggedIn")
+        isLoggedIn = false
         // Optionally redirect to login or welcome view
         //tabBarSelection = 0 // or trigger logout state in your app model
     }

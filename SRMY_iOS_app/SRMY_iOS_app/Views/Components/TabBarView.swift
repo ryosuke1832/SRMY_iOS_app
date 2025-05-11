@@ -32,6 +32,7 @@ struct TabBarView: View {
                 // Settings Tab
                 TabBarButton(iconName: "gear", title: "Settings", isSelected: selectedTab == 3) {
                     selectedTab = 3
+                    
                 }
             }
             .frame(height: 80)

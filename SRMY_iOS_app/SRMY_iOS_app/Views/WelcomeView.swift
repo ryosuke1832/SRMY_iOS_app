@@ -9,12 +9,13 @@ import SwiftUI
 
 struct WelcomeView: View {
     @State private var username: String = ""
-    @State private var navigateToMain = false
-
+    //@State private var navigateToMain = false
+    @Environment(\.dismiss) private var dismiss
+    @AppStorage("isLoggedIn") private var isLoggedIn = false
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                Text("Welcome")
+                Text("Welcome! 🎉")
                     .font(.largeTitle)
                     .fontWeight(.bold)
 
@@ -29,17 +30,12 @@ struct WelcomeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(Rectangle()) // Makes the entire VStack tappable
             .onTapGesture {
-                navigateToMain = true
+                isLoggedIn = true
             }
             .onAppear {
                 username = UserDefaults.standard.string(forKey: "username") ?? "Guest"
             }
-            .background(
-                NavigationLink(destination: MainView(selectedTab: .constant(0)), isActive: $navigateToMain) {
-                    EmptyView()
-                }
-                .hidden()
-            )
+
         }
         .navigationBarBackButtonHidden(true)
     }
