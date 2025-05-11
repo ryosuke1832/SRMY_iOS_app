@@ -19,7 +19,7 @@ struct StatCard: View {
                 .foregroundColor(iconColor)
                 .font(.title2)
                 .frame(width: 36, height: 36)
-                .background(Color.white.opacity(0.2))
+                .background(Color.white.opacity(0.5))
                 .clipShape(Circle())
             
             VStack(alignment: .leading, spacing: 4) {
@@ -35,7 +35,7 @@ struct StatCard: View {
             Spacer()
         }
         .padding()
-        .background(Color.white.opacity(0.1))
+        .background(Color.white.opacity(0.3))
         .cornerRadius(12)
     }
 }

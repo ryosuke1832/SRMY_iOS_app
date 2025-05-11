@@ -29,7 +29,7 @@ struct HabitLogRow: View {
                 .font(.title2)
         }
         .padding()
-        .background(Color.white.opacity(0.2))
+        .background(Color.white.opacity(0.3))
         .cornerRadius(12)
     }
 }

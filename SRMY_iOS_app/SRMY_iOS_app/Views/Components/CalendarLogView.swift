@@ -37,7 +37,7 @@ struct CalendarLogView: View {
                             .padding()
                     }
                     .frame(maxWidth: .infinity)
-                    .background(Color.white.opacity(0.1))
+                    .background(Color.white.opacity(0.5))
                     .cornerRadius(12)
                     .padding(.horizontal)
                 } else {
@@ -55,6 +55,7 @@ struct CalendarLogView: View {
             
             Spacer()
         }
+        .environment(\.colorScheme, .dark)
     }
     
     func habitsForSelectedDate() -> [Habit] {

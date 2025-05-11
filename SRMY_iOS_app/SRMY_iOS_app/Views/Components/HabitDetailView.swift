@@ -116,7 +116,6 @@ struct HabitDetailView: View {
     }
 }
 
-
 #Preview("Habit Detail View") {
     var habit = Habit(name: "Running", startDate: Date().addingTimeInterval(-60*60*24*14))
     habit.streakCount = 7
