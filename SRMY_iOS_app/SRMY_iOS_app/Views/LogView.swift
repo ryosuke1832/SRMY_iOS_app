@@ -45,7 +45,6 @@ struct LogView: View {
                 }
                 
                 Spacer()
-                TabBarView(selectedTab: $tabBarSelection)
                     .padding(.bottom, 0)
             }
             .ignoresSafeArea(edges: .bottom)

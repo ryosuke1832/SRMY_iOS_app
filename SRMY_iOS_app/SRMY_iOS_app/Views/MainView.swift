@@ -107,10 +107,8 @@ struct MainView: View {
                             }
                             .padding(.horizontal)
                         }
-                        .padding(.bottom, 90) // for tabBar
+                        .padding(.bottom, 0) // for tabBar
                     }
-                TabBarView(selectedTab: $selectedTab)
-                    .padding(.bottom, 0)
                 }
             .ignoresSafeArea(edges: .bottom)
 

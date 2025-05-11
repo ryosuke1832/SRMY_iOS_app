@@ -37,7 +37,7 @@ struct ProfileView: View {
                  .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
                  .padding(.horizontal)
 
-                 Spacer()
+                 Spacer().frame(height: 40)
                  
                  Button(action: logoutUser) {
                      Text("Logout")
@@ -49,9 +49,9 @@ struct ProfileView: View {
                          .cornerRadius(12)
                  }
                  .padding(.horizontal)
+                 .padding(.bottom, 100)
                  
-                 TabBarView(selectedTab: $tabBarSelection)
-                     .padding(.bottom, 0)
+                 Spacer(minLength: 0)
              }
              .ignoresSafeArea(edges: .bottom)
              .multilineTextAlignment(.center)
