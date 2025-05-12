@@ -9,6 +9,7 @@ import Foundation
 
 class HabitService: ObservableObject {
     @Published var habits: [Habit] = []
+    @Published var recentlyCompleted: Set<UUID> = []
     
     private let saveKey = "SavedHabits"
     private let levelService: any LevelServiceProtocol
@@ -85,7 +86,10 @@ class HabitService: ObservableObject {
 
             levelService.awardXP(habitID: habit.id,base: 25, comboIndex: comboIndex, streak: streak)  //call levelService
             // ----------------------------------
-            
+            recentlyCompleted.insert(habit.id)                                    //delay vanish row
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                self.recentlyCompleted.remove(habit.id)
+            }
             habits[index].completionHistory.append(today)
 
             saveHabits()

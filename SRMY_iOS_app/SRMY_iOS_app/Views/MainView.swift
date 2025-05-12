@@ -95,7 +95,8 @@ struct MainView: View {
                     } else {
                         ScrollView {
                             VStack(spacing: 15) {
-                                ForEach(habitService.habits.filter { !habitService.isCompletedToday($0)}) { habit in
+                                ForEach(habitService.habits.filter {     !habitService.isCompletedToday($0) ||
+                                    habitService.recentlyCompleted.contains($0.id)}) { habit in
                                     HabitRowView(habit: habit)
                                         .id(habit.id)
                                         .transition(
